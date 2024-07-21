@@ -5,8 +5,8 @@
       name="aleCountContainer"
       :aleCount="state.aleCount"
       :doubledAleCount="doubledAleCount"
-      :incrementAleCount="incrementAleCount"
-      :clearAleCount="clearAleCount"
+      :onIncrementAleCount="onIncrementAleCount"
+      :onClearAleCount="onClearAleCount"
     />
   </div>
 </template>
@@ -15,11 +15,11 @@
 const { state, doubled, increment, clear } = useAleCounter();
 const doubledAleCount = doubled;
 
-const incrementAleCount = () => {
+const onIncrementAleCount = () => {
   increment({ ...state.value, aleCount: state.value.aleCount + 1 });
 };
 
-const clearAleCount = () => {
+const onClearAleCount = () => {
   clear();
 };
 </script>

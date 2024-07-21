@@ -2,20 +2,20 @@
   <div>
     <h1>My Greeting Page</h1>
     <FavoriteContainer>
-      <template v-slot:favoriteContainer="{ favorite, toggleFavorite }">
+      <template #favoriteContainer="{ favorite, onToggleFavorite }">
         <AleCountContainer>
           <template
-            v-slot:aleCountContainer="{
+            #aleCountContainer="{
               aleCount,
               doubledAleCount,
-              incrementAleCount,
-              clearAleCount,
+              onIncrementAleCount,
+              onClearAleCount,
             }"
           >
             <UserContainer :id="id">
-              <template v-slot:userContainer="{ profile }">
+              <template #userContainer="{ profile }">
                 <GreetingContainer :id="id">
-                  <template v-slot:greetingContainer="{ greeting }">
+                  <template #greetingContainer="{ greeting }">
                     <UserCard
                       v-if="profile"
                       :age="profile.age"
@@ -25,7 +25,7 @@
                       :greeting="greeting.text"
                       :greetingId="greeting.id"
                       :favorite="favorite"
-                      @click="toggleFavorite"
+                      @click="onToggleFavorite"
                     />
                     <p v-else>存在しないユーザーです。</p>
                   </template>
@@ -33,11 +33,13 @@
               </template>
             </UserContainer>
             <div class="button_area">
-              <Button @click="incrementAleCount" class="ale_button"
+              <Button @click="onIncrementAleCount" class="ale_button"
                 >応援する</Button
               >
-              <Button @click="clearAleCount" class="ale_button">クリア</Button>
-              <Button @click="toggleFavorite" class="ale_button"
+              <Button @click="onClearAleCount" class="ale_button"
+                >クリア</Button
+              >
+              <Button @click="onToggleFavorite" class="ale_button"
                 >お気に入り</Button
               >
             </div>

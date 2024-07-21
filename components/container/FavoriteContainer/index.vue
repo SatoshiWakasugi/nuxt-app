@@ -4,7 +4,7 @@
     <slot
       name="favoriteContainer"
       :favorite="favorite"
-      :toggleFavorite="toggleFavorite"
+      :onToggleFavorite="onToggleFavorite"
     />
   </div>
 </template>
@@ -12,7 +12,7 @@
 <script setup>
 const favorite = ref(false);
 
-const toggleFavorite = () => {
+const onToggleFavorite = () => {
   favorite.value = !favorite.value;
 };
 </script>
