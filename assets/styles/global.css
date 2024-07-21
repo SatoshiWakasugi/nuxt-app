@@ -1,0 +1,19 @@
+.container {
+  background-color: pink;
+  padding: 36px;
+  border: solid 2px gray;
+}
+
+.presentation {
+  background-color: cyan;
+  padding: 36px;
+  border: solid 2px gray;
+}
+
+.text-m {
+  font-size: 14px;
+}
+
+p {
+  margin: 0;
+}
