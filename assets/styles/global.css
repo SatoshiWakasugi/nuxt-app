@@ -17,3 +17,39 @@
 p {
   margin: 0;
 }
+
+.flex {
+  display: flex;
+}
+
+.flex-col {
+  flex-direction: column;
+}
+
+.flex-center {
+  justify-content: center;
+}
+
+.flex-gap-s {
+  gap: 16px;
+}
+
+.flex-gap-m {
+  gap: 16px;
+}
+
+.flex-gap-l {
+  gap: 16px;
+}
+
+.p-s {
+  padding: 8px;
+}
+
+.p-m {
+  padding: 16px;
+}
+
+.p-l {
+  padding: 24px;
+}

@@ -48,12 +48,35 @@
         </AleCountContainer>
       </template>
     </FavoriteContainer>
+    <Modal @on-open="alertMessage" @on-close="alertMessage">
+      <template #trigger>
+        <Button>modal open</Button>
+      </template>
+      <template #contents="{ close }">
+        <div class="modal-contents">
+          <div class="p-m">モーダル</div>
+          <div class="flex flex-center flex-gap-m">
+            <Button @click="onClose(close)">close</Button>
+            <Button @click="alertMessage('submit')">submit</Button>
+          </div>
+        </div>
+      </template>
+    </Modal>
   </div>
 </template>
 
 <script setup>
 const route = useRoute();
 const id = route.query.id;
+
+const onClose = (close) => {
+  console.log("onClose");
+  close();
+};
+
+const alertMessage = (message) => {
+  alert(message);
+};
 </script>
 
 <style scoped>
