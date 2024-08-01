@@ -3,10 +3,10 @@ export const fetchUser = (id: number) => {
   const response = {
     age: 30,
     id: id,
-    name: "otanisan",
-    sex: "male",
+    name: 'otanisan',
+    sex: 'male',
     favorite: false,
-  };
+  }
 
-  return response;
-};
+  return response
+}

@@ -8,12 +8,17 @@
     <p>greetingId: {{ greetingId }}</p>
     <p>greeting: {{ greeting }}</p>
     <p>favorite: <span v-if="favorite">好き</span><span v-else>嫌い</span></p>
-    <Button @click="onClick" class="ale_button">お気に入り</Button>
+    <Button
+      class="ale_button"
+      @click="onClick"
+    >
+      お気に入り
+    </Button>
   </div>
 </template>
 
 <script setup>
-const props = defineProps({
+defineProps({
   age: { type: Number, required: true },
   id: { type: String, required: true },
   name: { type: String, required: true },
@@ -21,11 +26,11 @@ const props = defineProps({
   greeting: { type: String, required: true },
   greetingId: { type: String, required: true },
   favorite: { type: Boolean, required: true },
-});
+})
 
-const emit = defineEmits(["click"]);
+const emit = defineEmits(['click'])
 
 const onClick = () => {
-  emit("click");
-};
+  emit('click')
+}
 </script>

@@ -18,40 +18,62 @@
                   <template #greetingContainer="{ greeting }">
                     <UserCard
                       v-if="profile"
-                      :age="profile.age"
                       :id="profile.id"
+                      :age="profile.age"
                       :name="profile.name"
                       :sex="profile.sex"
                       :greeting="greeting.text"
-                      :greetingId="greeting.id"
+                      :greeting-id="greeting.id"
                       :favorite="favorite"
                       @click="onToggleFavorite"
                     />
-                    <p v-else>存在しないユーザーです。</p>
+                    <p v-else>
+                      存在しないユーザーです。
+                    </p>
                   </template>
                 </GreetingContainer>
               </template>
             </UserContainer>
             <div class="flex justify-center align-middle gap-4 py-4">
-              <Button @click="onIncrementAleCount">応援する</Button>
-              <Button @click="onClearAleCount">クリア</Button>
-              <Button @click="onToggleFavorite">お気に入り</Button>
+              <Button @click="onIncrementAleCount">
+                応援する
+              </Button>
+              <Button @click="onClearAleCount">
+                クリア
+              </Button>
+              <Button @click="onToggleFavorite">
+                お気に入り
+              </Button>
             </div>
-            <AleCount :aleCount="aleCount" :doubledAleCount="doubledAleCount" />
+            <AleCount
+              :ale-count="aleCount"
+              :doubled-ale-count="doubledAleCount"
+            />
           </template>
         </AleCountContainer>
       </template>
     </FavoriteContainer>
-    <Modal @on-open="alertMessage" @on-close="alertMessage">
+    <Modal
+      @on-open="alertMessage"
+      @on-close="alertMessage"
+    >
       <template #trigger="{ open }">
-        <Button @click="handleOpenModal(open)">modal open</Button>
+        <Button @click="handleOpenModal(open)">
+          modal open
+        </Button>
       </template>
       <template #contents="{ close }">
         <div class="modal-contents">
-          <div class="p-m">モーダル</div>
+          <div class="p-m">
+            モーダル
+          </div>
           <div class="flex flex-center flex-gap-m">
-            <Button @click="handleCloseModal(close)">close</Button>
-            <Button @click="alertMessage('submit')">submit</Button>
+            <Button @click="handleCloseModal(close)">
+              close
+            </Button>
+            <Button @click="alertMessage('submit')">
+              submit
+            </Button>
           </div>
         </div>
       </template>
@@ -60,18 +82,18 @@
 </template>
 
 <script setup>
-const route = useRoute();
-const id = route.query.id;
+const route = useRoute()
+const id = route.query.id
 
 const handleOpenModal = (open) => {
-  open();
-};
+  open()
+}
 
 const handleCloseModal = (close) => {
-  close();
-};
+  close()
+}
 
 const alertMessage = (message) => {
-  alert(message);
-};
+  alert(message)
+}
 </script>

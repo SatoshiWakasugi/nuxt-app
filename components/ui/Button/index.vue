@@ -1,8 +1,8 @@
 <template>
   <div>
     <button
-      @click="onClick"
       class="px-4 py-2 rounded-md bg-blue-600 text-white"
+      @click="onClick"
     >
       <slot />
     </button>
@@ -10,9 +10,9 @@
 </template>
 
 <script setup>
-const emit = defineEmits(["click"]);
+const emit = defineEmits(['click'])
 
 const onClick = () => {
-  emit("click");
-};
+  emit('click')
+}
 </script>

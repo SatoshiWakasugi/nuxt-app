@@ -1,19 +1,19 @@
 type GreetingState = {
-  id: string;
-  text: string;
-};
+  id: string
+  text: string
+}
 
 export const useGreeting = () => {
-  const state = useState<GreetingState>("greeting", () => {
+  const state = useState<GreetingState>('greeting', () => {
     return {
-      id: "",
-      text: "",
-    };
-  });
+      id: '',
+      text: '',
+    }
+  })
 
   const setGreeting = (value: GreetingState) => {
-    state.value = value;
-  };
+    state.value = value
+  }
 
-  return { state, setGreeting };
-};
+  return { state, setGreeting }
+}
