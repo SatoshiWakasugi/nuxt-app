@@ -1,37 +1,46 @@
-import type { NuxtPage } from "nuxt/schema";
+import type { NuxtPage } from 'nuxt/schema'
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  compatibilityDate: "2024-04-03",
+  compatibilityDate: '2024-04-03',
   devtools: { enabled: true },
-  modules: ["@nuxtjs/tailwindcss"],
+  modules: ['@nuxtjs/tailwindcss', '@nuxt/eslint'],
+  eslint: {
+    config: {
+      stylistic: {
+        indent: 2,
+        quotes: 'single',
+        semi: false,
+      },
+    },
+  },
   hooks: {
-    "pages:extend"(pages) {
+    'pages:extend'(pages) {
       const removePagesMatching = (pattern: RegExp, pages: NuxtPage[] = []) => {
-        const pagesToRemove = [];
+        const pagesToRemove = []
         for (const page of pages) {
-          if (page.file == null) continue;
-          if (pattern.test(page.file)) pagesToRemove.push(page);
-          else removePagesMatching(pattern, page.children);
+          if (page.file == null) continue
+          if (pattern.test(page.file)) pagesToRemove.push(page)
+          else removePagesMatching(pattern, page.children)
         }
         for (const page of pagesToRemove) {
-          pages.splice(pages.indexOf(page), 1);
+          pages.splice(pages.indexOf(page), 1)
         }
-      };
-      removePagesMatching(/\/_.*\//, pages);
+      }
+      removePagesMatching(/\/_.*\//, pages)
     },
   },
   components: {
     dirs: [
       {
-        path: "components",
-        extensions: [".vue"],
+        path: 'components',
+        extensions: ['.vue'],
         pathPrefix: false,
         global: true,
       },
       {
-        path: "~/pages/**/_components",
-        extensions: [".vue"],
+        path: '~/pages/**/_components',
+        extensions: ['.vue'],
         pathPrefix: true,
         global: true,
       },
@@ -39,15 +48,15 @@ export default defineNuxtConfig({
   },
   imports: {
     dirs: [
-      "~/components",
-      "~/components/ui",
-      "~/components/container",
-      "~/components/presentation",
-      "~/composables/",
-      "~/utils",
-      "~/pages/**/_components",
-      "~/pages/**/_composables",
+      '~/components',
+      '~/components/ui',
+      '~/components/container',
+      '~/components/presentation',
+      '~/composables/',
+      '~/utils',
+      '~/pages/**/_components',
+      '~/pages/**/_composables',
     ],
   },
-  css: ["~/assets/styles/global.css"],
-});
+  css: ['~/assets/styles/global.css'],
+})
