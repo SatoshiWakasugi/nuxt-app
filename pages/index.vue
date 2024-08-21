@@ -54,8 +54,11 @@
       </template>
     </FavoriteContainer>
     <Modal
-      @on-open="alertMessage"
-      @on-close="alertMessage"
+      :open="isModalOpen"
+      :overlay-closable="false"
+      @on-open="logMessage"
+      @on-close="logMessage"
+      @update="handleChangeModalState"
     >
       <template #trigger="{ open }">
         <Button @click="handleOpenModal(open)">
@@ -78,22 +81,40 @@
         </div>
       </template>
     </Modal>
+    <p>{{ isModalOpen }}</p>
+    <button @click="isModalOpen=!isModalOpen">
+      更新
+    </button>
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
+import Modal from '@/components/ui/Modal/index.vue'
+
 const route = useRoute()
 const id = route.query.id
+const isModalOpen = ref(false)
 
-const handleOpenModal = (open) => {
+const handleOpenModal = (open: () => void) => {
   open()
 }
 
-const handleCloseModal = (close) => {
+const handleCloseModal = (close: () => void) => {
   close()
 }
 
-const alertMessage = (message) => {
+const handleChangeModalState = () => {
+  isModalOpen.value = !isModalOpen.value
+}
+
+const alertMessage = (message: string) => {
   alert(message)
+}
+
+const logMessage = (arg1: string, arg2: string) => {
+  // eslint-disable-next-line no-console
+  console.log(arg1)
+  // eslint-disable-next-line no-console
+  console.log(arg2)
 }
 </script>

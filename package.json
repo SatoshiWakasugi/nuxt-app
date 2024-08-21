@@ -15,8 +15,7 @@
   "dependencies": {
     "@nuxt/eslint": "^0.4.0",
     "nuxt": "^3.12.4",
-    "vue": "latest",
-    "vuetify": "^3.7.0"
+    "vue": "latest"
   },
   "devDependencies": {
     "@nuxtjs/tailwindcss": "^6.12.1",
