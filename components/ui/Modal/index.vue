@@ -2,32 +2,37 @@
 /**
  * # Modal
  *
- * This component provides a modal dialog with customizable trigger and content slots.
+ * This component provides a modal UI.
  *
- * ---
- *
- * ## How to import
+ * ***
+ * ## ❓ How to import
  *
  * ```javascript
  * import Modal from '@/components/ui/Modal/index.vue';
  * ```
  *
- * ---
- * ## Props
- * - **open**: `Boolean` (optional)
+ * ***
+ * ## 🛠️ Props
+ * - **open** : `Boolean` (optional)
  *   - Controls the visibility of the modal.
- * - **closeIcon**: `String` (optional)
- *   - The icon used to close the modal.
+ * - **closeIcon** : `Boolean` (optional)
+ *   - The icon used to  the modal.
+ * - **closable** : `Boolean` (optional)
+ *   - The icon used to  the modal.
+ * - **overlayClosable** : `Boolean` (optional)
+ *   - The icon used to  the modal.
+ * - **...** : `HTMLAttributes`
+ *   - The icon used to  the modal.
  *
- * ---
- * ## Slots
- * - **trigger**
+ * ***
+ * ## 🎰 Slots
+ * - **trigger** : slotPlops -> [ open ]
  *   - The slot for the trigger element to open the modal.
- * - **contents**
+ * - **contents** : slotPlops -> [ close ]
  *   - The slot for the content inside the modal.
  *
- * ---
- * ## Emits
+ * ***
+ * ## 🚀 Emits
  * - **onOpen**
  *   - Emitted when the modal is opened.
  * - **onClose**
@@ -35,38 +40,39 @@
  * - **update**
  *   - Emitted when the modal is updated.
  *
- * ---
- * ## Storybook
+ * ***
+ * ## 📕 Storybook
  * - [Storybook Link](https://www.youtube.com/)
  */
-
-export default {}
 </script>
 
 <template>
   <div>
-    <slot
-      name="trigger"
-      :open="onOpen"
+    <div
       class="w-fit pointer"
+      @click="onOpen"
     >
-      <button @click="onOpen">
-        open
-      </button>
-    </slot>
+      <slot
+        name="trigger"
+        :open="onOpen"
+      />
+    </div>
     <Teleport to="body">
       <div
-        v-show="isOpen"
-        class="fixed z-50 top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%]"
+        v-if="isOpen"
+        class="fixed h-full w-full bg-black opacity-50"
+        @click="overlayClosable && onClose()"
+      />
+      <div
+        v-if="isOpen"
+        class="fixed top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%]"
       >
         <div
-          class="relative bg-white w-[360px] rounded-md"
-          :class="[classes]"
-          :style="[BASE_STYLE, styles]"
+          :class="[BASE_STYLE, props.class]"
         >
           <button
             v-show="closeIcon"
-            class="fixed top-4 right-4 w-6 h-6"
+            class="absolute top-4 right-4 w-6 h-6"
             @click="onClose"
           >
             <svg
@@ -77,33 +83,48 @@ export default {}
           <slot
             name="contents"
             :close="onClose"
-          >
-            contents
-          </slot>
+          />
         </div>
       </div>
-      <div
-        v-show="isOpen"
-        class="z-99 fixed flex justify-center align-middle top-0 bottom-0 left-0 right-0 bg-black opacity-50"
-        @click="overlayClosable ? onClose : null"
-      />
     </Teleport>
   </div>
 </template>
 
 <script setup lang="ts">
-const isOpen = ref(false)
+import type { HTMLAttributes } from 'vue'
 
-const props = defineProps({
-  classes: { type: String },
-  styles: { type: Object },
-  open: { type: Boolean },
-  closeIcon: { type: Boolean, default: true },
-  closable: { type: Boolean, default: true },
-  overlayClosable: { type: Boolean, default: true },
+interface Props extends /* @vue-ignore */ HTMLAttributes {
+  open?: boolean
+  closeIcon?: boolean
+  closable?: boolean
+  overlayClosable?: boolean
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  triggerType: 'button',
+  closeIcon: true,
+  closable: true,
+  overlayClosable: true,
 })
 
-const emit = defineEmits(['onOpen', 'onClose', 'update'])
+const emit = defineEmits(['onOpen', 'onClose', 'handleOpen'])
+
+const isOpen = ref(false)
+
+const slots = useSlots()
+const { trigger, contents } = slots
+
+const throwError = (errorMessage: string) => {
+  throw Error(errorMessage)
+}
+
+if (trigger) {
+  if (!trigger()?.[0]?.children) throwError('slot #trigger children is required.')
+}
+
+if (contents) {
+  if (!contents()?.[0]?.children) throwError('slot #contents children is required.')
+}
 
 onMounted(() => {
   if (props.open) {
@@ -117,7 +138,7 @@ watch(() => props.open, () => {
 
 const onOpen = () => {
   isOpen.value = true
-  emit('onOpen', 'open')
+  emit('onOpen')
 }
 
 const onClose = () => {
@@ -125,16 +146,14 @@ const onClose = () => {
     return
   }
   if (props.open) {
-    emit('update')
+    emit('handleOpen')
     return
   }
   isOpen.value = false
-  emit('onClose', 'close1', 'close2')
+  emit('onClose')
 }
 
-const BASE_STYLE = reactive({
-  padding: '1.5rem',
-})
+const BASE_STYLE = 'bg-white w-[360px] rounded-md p-8'
 </script>
 
 <style scoped></style>
